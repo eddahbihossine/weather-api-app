@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Weather api</title>
+  <link rel="stylesheet" href="syle.css">
+</head>
+<body>
+  
+  
+    <div class="input">
+      <input type="text" placeholder="(ex:New york)" class="input_text">
+      <input type="submit" value="ENTER THE CITY" class="submit">
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <h1 class="name" id="name"></h1>
+      <p class="temp"></p>
+      <p class="clouds"></p>
+      <p class="desc"></p>
+    </div>
+  </div>
+<script>
+    var input = document.querySelector('.input_text');
+    var main = document.querySelector('#name');
+    var temp = document.querySelector('.temp');
+    var desc = document.querySelector('.desc');
+    var clouds = document.querySelector('.clouds');
+    var button= document.querySelector('.submit');
+    
+    
+    button.addEventListener('click', function(name){
+    fetch('https://api.openweathermap.org/data/2.5/weather?q='+input.value+'&appid=50a7aa80fa492fa92e874d23ad061374')
+    .then(response => response.json())
+    .then(data => {
+      var tempValue = data['main']['temp'];
+      var nameValue = data['name'];
+      var descValue = data['weather'][0]['description'];
+    
+      main.innerHTML = nameValue;
+      desc.innerHTML = "Desc - "+descValue;
+      temp.innerHTML = "Temp - "+tempValue;
+      input.value ="";
+    
+    })
+    
+    .catch(err => alert("Wrong city name!"));
+    })</script>
+</body>
+</html>
